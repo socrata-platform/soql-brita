@@ -2,7 +2,7 @@ name := "soql-brita"
 
 organization := "com.socrata"
 
-version := "1.0.1"
+version := "1.1.0"
 
 scalaVersion := "2.10.0"
 

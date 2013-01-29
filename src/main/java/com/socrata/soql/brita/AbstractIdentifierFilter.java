@@ -1,6 +1,6 @@
 package com.socrata.soql.brita;
 
-abstract class AbstractBrita {
+abstract class AbstractIdentifierFilter {
     private static final int SyntheticUnderscore = Integer.MAX_VALUE;
     private static final int StartOfString = Integer.MAX_VALUE - 1;
     private static final int EndOfString = Integer.MAX_VALUE - 2;
@@ -8,7 +8,7 @@ abstract class AbstractBrita {
     private final int[] buf;
     private int endPtr;
 
-    AbstractBrita(scala.collection.Iterable<String> xs) {
+    AbstractIdentifierFilter(scala.collection.Iterable<String> xs) {
         buf = initialFill(xs);
         endPtr = buf.length;
     }
