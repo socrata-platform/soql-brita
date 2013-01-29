@@ -36,4 +36,8 @@ class BritaTest extends FunSuite with MustMatchers {
   test("An empty string returns a single underscore") {
     Brita("") must equal ("_")
   }
+
+  test("A sequence of strings are underscore-separated") {
+    Brita(List("hello", "world")) must equal ("hello_world")
+  }
 }
