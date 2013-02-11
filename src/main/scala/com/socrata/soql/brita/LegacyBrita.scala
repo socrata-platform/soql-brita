@@ -1,7 +1,7 @@
 package com.socrata.soql.brita
 
-@deprecated("Use LegacyIdentifierFilter instead")
+@deprecated("Use AsciiIdentifierFilter instead")
 object LegacyBrita {
-  def apply(xs: Iterable[String]) = LegacyIdentifierFilter(xs)
-  def apply(x: String) = LegacyIdentifierFilter(x)
+  def apply(xs: Iterable[String]) = AsciiIdentifierFilter(xs)
+  def apply(x: String) = AsciiIdentifierFilter(x)
 }
