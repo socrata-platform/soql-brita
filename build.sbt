@@ -1,8 +1,15 @@
+import com.typesafe.tools.mima.plugin.MimaPlugin.mimaDefaultSettings
+import com.typesafe.tools.mima.plugin.MimaKeys.previousArtifact
+
+mimaDefaultSettings
+
 name := "soql-brita"
 
 organization := "com.socrata"
 
-version := "1.2.0"
+version := "1.2.1-SNAPSHOT"
+
+previousArtifact <<= scalaBinaryVersion { sv => Some("com.socrata" % ("soql-brita_" + sv) % "1.2.0") }
 
 scalaVersion := "2.10.0"
 
