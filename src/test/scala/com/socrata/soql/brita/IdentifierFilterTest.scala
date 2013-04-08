@@ -2,8 +2,9 @@ package com.socrata.soql.brita
 
 import org.scalatest.FunSuite
 import org.scalatest.matchers.MustMatchers
+import org.scalatest.prop.PropertyChecks
 
-class IdentifierFilterTest extends FunSuite with MustMatchers {
+class IdentifierFilterTest extends FunSuite with MustMatchers with PropertyChecks {
   test("A simple identifier is unchanged") {
     IdentifierFilter("hello") must equal ("hello")
   }
@@ -43,5 +44,11 @@ class IdentifierFilterTest extends FunSuite with MustMatchers {
 
   test("A sequence of strings are underscore-separated") {
     IdentifierFilter(List("hello", "world")) must equal ("hello_world")
+  }
+
+  test("Applying an identifier filter is idempotent") {
+    forAll { xs: List[String] =>
+      IdentifierFilter(IdentifierFilter(xs)) must equal (IdentifierFilter(xs))
+    }
   }
 }
