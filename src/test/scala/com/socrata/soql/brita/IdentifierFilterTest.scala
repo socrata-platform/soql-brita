@@ -37,6 +37,10 @@ class IdentifierFilterTest extends FunSuite with MustMatchers {
     IdentifierFilter("") must equal ("_")
   }
 
+  test("An empty list returns a single underscore") {
+    IdentifierFilter(Nil) must equal ("_")
+  }
+
   test("A sequence of strings are underscore-separated") {
     IdentifierFilter(List("hello", "world")) must equal ("hello_world")
   }

@@ -88,7 +88,7 @@ abstract class AbstractIdentifierFilter {
     }
 
     private int[] initialFill(final scala.collection.Iterable<String> xs) {
-        final int[] buf = new int[totalLength(xs) + xs.size()-1 + 2];
+        final int[] buf = new int[totalLength(xs) + Math.max(0, xs.size()-1) + 2];
         buf[0] = StartOfString;
 
         final scala.collection.Iterator<String> it = xs.iterator();
