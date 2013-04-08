@@ -7,7 +7,7 @@ name := "soql-brita"
 
 organization := "com.socrata"
 
-version := "1.2.1-SNAPSHOT"
+version := "1.2.1"
 
 previousArtifact <<= scalaBinaryVersion { sv => Some("com.socrata" % ("soql-brita_" + sv) % "1.2.0") }
 
