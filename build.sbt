@@ -1,10 +1,7 @@
-import eu.diversit.sbt.plugin.WebDavPlugin._
 import com.typesafe.tools.mima.plugin.MimaPlugin.mimaDefaultSettings
 import com.typesafe.tools.mima.plugin.MimaKeys.previousArtifact
 
 mimaDefaultSettings
-
-seq(WebDav.scopedSettings : _*)
 
 name := "soql-brita"
 
@@ -27,17 +24,4 @@ libraryDependencies <++= (scalaVersion) {
     "org.scalatest" %% "scalatest" % "1.9.1" % "test",
     "org.scalacheck" %% "scalacheck" % "1.10.0" % "test"
   )
-}
-
-credentials ++= List(new File("/private/socrata-oss/maven-credentials")).flatMap { f =>
-  if(f.exists) Some(Credentials(f)) else None
-}
-
-publishTo <<= version { v =>
-  val cloudbees = "https://repository-socrata-oss.forge.cloudbees.com/"
-  if(v.endsWith("SNAPSHOT")) {
-    Some("snapshots" at cloudbees + "snapshot")
-  } else {
-    Some("releases" at cloudbees + "release")
-  }
 }
