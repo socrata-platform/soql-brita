@@ -1,8 +1,6 @@
 import com.typesafe.tools.mima.plugin.MimaPlugin.mimaDefaultSettings
 import com.typesafe.tools.mima.plugin.MimaKeys.previousArtifact
 
-com.socrata.cloudbeessbt.SocrataCloudbeesSbt.socrataSettings()
-
 name := "soql-brita"
 
 previousArtifact <<= scalaBinaryVersion { sv => None /* Some("com.socrata" % ("soql-brita_" + sv) % "1.2.1") */ }
