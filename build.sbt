@@ -7,7 +7,7 @@ name := "soql-brita"
 
 previousArtifact <<= scalaBinaryVersion { sv => None /* Some("com.socrata" % ("soql-brita_" + sv) % "1.2.1") */ }
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.10.2"
 
 crossScalaVersions := Seq("2.10.4", scalaVersion.value)
 
