@@ -3,6 +3,7 @@ import com.typesafe.tools.mima.plugin.MimaKeys.previousArtifact
 import com.socrata.sbtplugins.StylePlugin.StyleKeys
 
 name := "soql-brita"
+organization := "com.socrata"
 
 previousArtifact <<= scalaBinaryVersion { sv => None /* Some("com.socrata" % ("soql-brita_" + sv) % "1.2.1") */ }
 
