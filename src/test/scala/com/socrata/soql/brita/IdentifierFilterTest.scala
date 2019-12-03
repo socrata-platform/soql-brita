@@ -2,9 +2,9 @@ package com.socrata.soql.brita
 
 import org.scalatest.FunSuite
 import org.scalatest.MustMatchers
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-class IdentifierFilterTest extends FunSuite with MustMatchers with PropertyChecks {
+class IdentifierFilterTest extends FunSuite with MustMatchers with ScalaCheckPropertyChecks {
   test("A simple identifier is unchanged") {
     IdentifierFilter("hello") must equal ("hello")
   }
