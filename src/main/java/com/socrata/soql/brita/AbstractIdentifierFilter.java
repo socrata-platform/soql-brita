@@ -1,6 +1,8 @@
 package com.socrata.soql.brita;
 
 abstract class AbstractIdentifierFilter {
+    // Unicode codepoints all fit in 21 bits; this means we can use
+    // big integers to represent things that are not codepoints.
     private static final int SyntheticUnderscore = Integer.MAX_VALUE;
     private static final int StartOfString = Integer.MAX_VALUE - 1;
     private static final int EndOfString = Integer.MAX_VALUE - 2;
@@ -21,12 +23,12 @@ abstract class AbstractIdentifierFilter {
 
         // Ok.  We're almost done.  Two edge cases and we can return it.
         if(asString.isEmpty()) return "_";
-        else if(!isGoodStartCharacter(asString.charAt(0))) return "_" + asString;
+        else if(!isGoodStartCharacter(asString.codePointAt(0))) return "_" + asString;
         else return asString;
     }
 
-    protected abstract boolean isGoodStartCharacter(char c);
-    protected abstract boolean isGoodCharacter(char c);
+    protected abstract boolean isGoodStartCharacter(int c);
+    protected abstract boolean isGoodCharacter(int c);
     protected abstract boolean isUnderscoreish(int c);
 
     private boolean adjacentToBoundary(int i) {
@@ -82,7 +84,7 @@ abstract class AbstractIdentifierFilter {
         StringBuilder sb = new StringBuilder(e - 1);
         for(int i = 1; i != e; ++i) {
             int c = b[i];
-            sb.append(c == SyntheticUnderscore ? '_' : (char)c);
+            sb.appendCodePoint(c == SyntheticUnderscore ? '_' : c);
         }
         return sb.toString();
     }
@@ -107,18 +109,23 @@ abstract class AbstractIdentifierFilter {
     }
 
     private int fillPart(final String s, final int[] buf, final int offs) {
-        for(int i = 0; i != s.length(); ++i) {
-            char c = s.charAt(i);
-            buf[offs + i] = isGoodCharacter(c) ? c :SyntheticUnderscore;
+        int src = 0;
+        int dst = offs;
+        while(src != s.length()) {
+            int c = s.codePointAt(src);
+            buf[dst] = isGoodCharacter(c) ? c :SyntheticUnderscore;
+            src += Character.charCount(c);
+            dst += 1;
         }
-        return offs + s.length();
+        return dst;
     }
 
     private static int totalLength(scala.collection.Iterable<String> xs) {
         final scala.collection.Iterator<String> it = xs.iterator();
         int total = 0;
         while(it.hasNext()) {
-            total += it.next().length();
+            String s = it.next();
+            total += s.codePointCount(0, s.length());
         }
         return total;
     }

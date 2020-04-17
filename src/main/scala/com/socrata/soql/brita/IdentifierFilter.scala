@@ -7,10 +7,10 @@ object IdentifierFilter {
   def apply(x: String) = new Impl(Some(x)).go()
 
   private class Impl(xs: Iterable[String]) extends AbstractIdentifierFilter(xs) {
-    def isGoodStartCharacter(c: Char) =
+    def isGoodStartCharacter(c: Int) =
       Character.isJavaIdentifierStart(c) || c == '-'
 
-    def isGoodCharacter(c: Char) =
+    def isGoodCharacter(c: Int) =
       Character.isJavaIdentifierPart(c) || c == '-'
 
     def isUnderscoreish(c: Int) =
