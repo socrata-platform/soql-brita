@@ -46,6 +46,44 @@ class IdentifierFilterTest extends FunSuite with MustMatchers with ScalaCheckPro
     IdentifierFilter(List("hello", "world")) must equal ("hello_world")
   }
 
+  test("Initial non-BMP character") {
+    val nonBMP = new String(Character.toChars(0x10000)) + "x"
+    IdentifierFilter(nonBMP) must equal (nonBMP)
+  }
+
+  test("Subsequent non-BMP character") {
+    val nonBMP = "x" + new String(Character.toChars(0x10000)) + "x"
+    IdentifierFilter(nonBMP) must equal (nonBMP)
+  }
+
+  test("Multiple non-BMP character") {
+    val nonBMP = "x" + new String(Character.toChars(0x10000) ++ Character.toChars(0x10001) ++ Character.toChars(0x10002)) + "x"
+    IdentifierFilter(nonBMP) must equal (nonBMP)
+  }
+
+  test("Illegal initial non-BMP character") {
+    val nonBMP = new String(Character.toChars(0x10100)) + "x"
+    IdentifierFilter(nonBMP) must equal ("x")
+  }
+
+  test("Illegal medial non-BMP character") {
+    val nonBMP = "x" + new String(Character.toChars(0x10100)) + "y"
+    IdentifierFilter(nonBMP) must equal ("x_y")
+  }
+
+  test("Illegal terminal non-BMP character") {
+    val nonBMP = "x" + new String(Character.toChars(0x10100))
+    IdentifierFilter(nonBMP) must equal ("x")
+  }
+
+  test("A stray high surrogate doesn't get it confused") {
+    IdentifierFilter("x\ud800y") must equal ("x_y")
+  }
+
+  test("A stray low surrogate doesn't get it confused") {
+    IdentifierFilter("x\udc00y") must equal ("x_y")
+  }
+
   test("Applying an identifier filter is idempotent") {
     forAll { xs: List[String] =>
       IdentifierFilter(IdentifierFilter(xs)) must equal (IdentifierFilter(xs))

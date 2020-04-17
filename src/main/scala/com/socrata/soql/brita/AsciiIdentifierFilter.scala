@@ -8,10 +8,10 @@ object AsciiIdentifierFilter {
   def apply(x: String) = new Impl(Some(x)).go()
 
   private class Impl(xs: Iterable[String]) extends AbstractIdentifierFilter(xs) {
-    def isGoodStartCharacter(c: Char) =
+    def isGoodStartCharacter(c: Int) =
       (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'
 
-    def isGoodCharacter(c: Char) =
+    def isGoodCharacter(c: Int) =
       (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_'
 
     def isUnderscoreish(c: Int) =
